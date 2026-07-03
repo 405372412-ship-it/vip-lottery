@@ -1153,7 +1153,273 @@
     }
 
     .main {
-      margin-top: 0;
+      width: min(1500px, 94vw);
+      margin: 0 auto;
+      grid-template-columns: minmax(430px, 500px) minmax(700px, 1fr);
+      gap: clamp(42px, 5vw, 78px);
+    }
+
+    .prize {
+      min-height: 500px;
+      padding: 22px;
+    }
+
+    .prize-img {
+      min-height: 330px;
+    }
+
+    .prize-img img {
+      max-height: 330px;
+    }
+
+    .stage {
+      min-height: min(66vh, 650px);
+      justify-items: start;
+    }
+
+    .sphere {
+      width: min(42vw, 620px);
+    }
+
+    .sphere.sparse {
+      width: min(45vw, 650px);
+    }
+
+    .sphere.medium {
+      width: min(43vw, 630px);
+    }
+
+    @media (min-width: 1500px) {
+      .screen {
+        padding-top: 24px;
+        gap: 12px;
+      }
+
+      header {
+        min-height: 132px;
+      }
+
+      h1 {
+        font-size: clamp(56px, 4.1vw, 78px);
+      }
+
+      .draw-controls {
+        margin-top: -20px;
+        margin-bottom: 18px;
+      }
+
+      .main {
+        transform: translateX(-1.8vw);
+      }
+    }
+
+    @media (max-width: 1280px), (max-height: 820px) {
+      body {
+        overflow: auto;
+      }
+
+      .screen {
+        min-height: 100dvh;
+        padding: 20px min(3vw, 34px) 18px;
+        gap: 10px;
+      }
+
+      header {
+        min-height: 112px;
+      }
+
+      header > div:first-child {
+        max-width: min(860px, 82vw);
+      }
+
+      h1 {
+        font-size: clamp(42px, 4.4vw, 64px);
+      }
+
+      .draw-controls {
+        width: min(560px, 88vw);
+        min-height: 62px;
+        margin-top: -18px;
+        margin-bottom: 10px;
+        padding: 8px;
+      }
+
+      .control-btn {
+        min-width: 132px;
+        min-height: 48px;
+        font-size: 16px;
+      }
+
+      .main {
+        width: min(1120px, 94vw);
+        grid-template-columns: minmax(340px, 390px) minmax(520px, 1fr);
+        gap: 28px;
+        transform: none;
+      }
+
+      .prize {
+        min-height: 420px;
+        padding: 18px;
+      }
+
+      .prize-img {
+        min-height: 250px;
+      }
+
+      .prize-img img {
+        max-height: 250px;
+      }
+
+      .stage {
+        min-height: 500px;
+      }
+
+      .sphere,
+      .sphere.sparse,
+      .sphere.medium {
+        width: min(48vw, 520px);
+      }
+    }
+
+    @media (max-width: 1400px) and (max-height: 900px) {
+      body {
+        overflow: auto;
+      }
+
+      .screen {
+        min-height: 100dvh;
+        padding: 16px 24px 14px;
+        gap: 8px;
+      }
+
+      header {
+        min-height: 96px;
+      }
+
+      header > div:first-child {
+        max-width: min(780px, 76vw);
+      }
+
+      h1 {
+        margin-top: 6px;
+        font-size: clamp(42px, 5.2vw, 62px);
+        line-height: 1.02;
+      }
+
+      .draw-controls {
+        width: min(500px, 78vw);
+        min-height: 54px;
+        margin-top: -10px;
+        margin-bottom: 4px;
+        padding: 7px;
+      }
+
+      .control-btn {
+        min-width: 118px;
+        min-height: 42px;
+        font-size: 15px;
+      }
+
+      .top-actions {
+        top: 18px;
+        right: 18px;
+      }
+
+      .audio-btn {
+        width: 48px;
+        min-width: 48px;
+        height: 48px;
+        min-height: 48px;
+        font-size: 19px;
+      }
+
+      .main {
+        width: min(1040px, 94vw);
+        grid-template-columns: minmax(280px, 330px) minmax(480px, 1fr);
+        gap: 22px;
+        align-items: center;
+        transform: none;
+      }
+
+      .prize {
+        min-height: 350px;
+        padding: 14px;
+      }
+
+      .prize-round-tag {
+        font-size: 18px;
+        padding: 5px 14px;
+        margin-bottom: 8px;
+      }
+
+      .prize-img {
+        min-height: 210px;
+      }
+
+      .prize-img img {
+        max-height: 210px;
+      }
+
+      .prize-name {
+        margin-top: 12px;
+        font-size: 25px;
+      }
+
+      .prize-count {
+        margin-top: 5px;
+        font-size: 14px;
+      }
+
+      .stage {
+        min-height: 390px;
+        justify-items: center;
+      }
+
+      .sphere,
+      .sphere.sparse,
+      .sphere.medium {
+        width: min(48vw, 430px);
+      }
+
+      .halo {
+        width: min(52vw, 470px);
+      }
+    }
+
+    @media (max-width: 1050px) {
+      body {
+        overflow: auto;
+      }
+
+      .screen {
+        min-height: 100dvh;
+      }
+
+      .main {
+        width: min(720px, 94vw);
+        grid-template-columns: 1fr;
+        gap: 18px;
+        transform: none;
+      }
+
+      .prize {
+        min-height: 0;
+      }
+
+      .stage {
+        min-height: 520px;
+        justify-items: center;
+      }
+
+      .sphere,
+      .sphere.sparse,
+      .sphere.medium {
+        width: min(88vw, 560px);
+      }
+
+      .top-actions {
+        right: 18px;
+      }
     }
 
     @media (max-width: 720px) {
