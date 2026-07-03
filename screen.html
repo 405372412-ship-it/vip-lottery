@@ -1334,9 +1334,9 @@
       }
 
       .main {
-        width: min(1040px, 94vw);
-        grid-template-columns: minmax(280px, 330px) minmax(480px, 1fr);
-        gap: 22px;
+        width: min(1280px, 94vw);
+        grid-template-columns: minmax(280px, 330px) minmax(620px, 1fr);
+        gap: clamp(120px, 12vw, 220px);
         align-items: center;
         transform: none;
       }
@@ -1373,24 +1373,24 @@
       .stage {
         min-height: 390px;
         justify-items: end;
-        padding-left: clamp(90px, 9vw, 180px);
+        padding-left: clamp(150px, 14vw, 260px);
       }
 
       .sphere,
       .sphere.sparse,
       .sphere.medium {
         width: min(48vw, 430px);
-        margin-left: clamp(90px, 9vw, 180px);
+        margin-left: clamp(150px, 14vw, 260px);
       }
 
       .halo {
         width: min(52vw, 470px);
-        margin-left: clamp(90px, 9vw, 180px);
+        margin-left: clamp(150px, 14vw, 260px);
       }
 
       .orbit,
       .winner-board {
-        margin-left: clamp(90px, 9vw, 180px);
+        margin-left: clamp(150px, 14vw, 260px);
       }
     }
 
