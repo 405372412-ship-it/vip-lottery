@@ -1372,17 +1372,25 @@
 
       .stage {
         min-height: 390px;
-        justify-items: center;
+        justify-items: end;
+        padding-left: clamp(90px, 9vw, 180px);
       }
 
       .sphere,
       .sphere.sparse,
       .sphere.medium {
         width: min(48vw, 430px);
+        margin-left: clamp(90px, 9vw, 180px);
       }
 
       .halo {
         width: min(52vw, 470px);
+        margin-left: clamp(90px, 9vw, 180px);
+      }
+
+      .orbit,
+      .winner-board {
+        margin-left: clamp(90px, 9vw, 180px);
       }
     }
 
