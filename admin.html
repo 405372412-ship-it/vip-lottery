@@ -560,6 +560,27 @@
       return [...new Set(String(value || "").split(/[\n,，、\s]+/).map((name) => name.trim()).filter(Boolean))];
     }
 
+    function normalizeFixedWinners(value, winnerCount, participants) {
+      const fixed = parseNames(value);
+      const participantSet = new Set(participants);
+      const invalid = fixed.filter((name) => !participantSet.has(name));
+      const valid = fixed.filter((name) => participantSet.has(name));
+      const limit = Math.max(1, Number(winnerCount) || 1);
+      return {
+        names: valid.slice(0, limit),
+        invalid,
+        overLimit: valid.slice(limit),
+        limit
+      };
+    }
+
+    function formatFixedWinnerNotice(result) {
+      const messages = [];
+      if (result.invalid.length) messages.push(`已移除不在抽奖名单中的姓名：${result.invalid.join("、")}`);
+      if (result.overLimit.length) messages.push(`内定名单最多 ${result.limit} 人，已移除超出人数：${result.overLimit.join("、")}`);
+      return messages.join("；");
+    }
+
     function defaultData() {
       return {
         eventName: "VIP客户专属礼遇抽奖夜",
@@ -692,14 +713,21 @@
       toast(`活动已保存，共 ${data.participants.length} 人`);
     }
 
-    function updateRoundFromForm(finalize = false) {
+    function updateRoundFromForm(finalize = false, notify = false) {
       const round = getRound();
       if (!round) return null;
+      const participants = parseNames($("participants").value);
       round.name = $("roundName").value.trim() || "未命名轮次";
       round.prizeName = $("prizeName").value.trim() || "神秘礼品";
       round.prizeValue = $("prizeValue").value.trim();
       round.winnerCount = Math.max(1, Number($("winnerCount").value) || 1);
-      round.fixedWinners = parseNames($("fixedWinners").value);
+      const fixedResult = normalizeFixedWinners($("fixedWinners").value, round.winnerCount, participants);
+      round.fixedWinners = fixedResult.names;
+      $("fixedWinners").value = round.fixedWinners.join("\n");
+      if (notify) {
+        const notice = formatFixedWinnerNotice(fixedResult);
+        if (notice) toast(notice);
+      }
       round.draftSavedAt = Date.now();
       if (finalize) {
         round.finalizedAt = Date.now();
@@ -740,11 +768,24 @@
       queueAutoSaveEvent.timer = setTimeout(autoSaveEventDraft, 500);
     }
 
+    function queueSanitizeFixedWinners() {
+      clearTimeout(queueSanitizeFixedWinners.timer);
+      queueSanitizeFixedWinners.timer = setTimeout(() => {
+        const participants = parseNames($("participants").value);
+        const count = Math.max(1, Number($("winnerCount").value) || 1);
+        const fixedResult = normalizeFixedWinners($("fixedWinners").value, count, participants);
+        $("fixedWinners").value = fixedResult.names.join("\n");
+        const notice = formatFixedWinnerNotice(fixedResult);
+        if (notice) toast(notice);
+        queueAutoSave();
+      }, 260);
+    }
+
     function saveRound() {
-      const round = updateRoundFromForm(true);
-      if (!round) return;
       data.eventName = $("eventName").value.trim() || "VIP礼品直播抽奖";
       data.participants = parseNames($("participants").value);
+      const round = updateRoundFromForm(true, true);
+      if (!round) return;
       saveData();
       fillForm();
       renderRounds();
@@ -831,10 +872,12 @@
       $(id).addEventListener("change", queueAutoSaveEvent);
     });
 
-    ["roundName", "prizeName", "prizeValue", "winnerCount", "fixedWinners"].forEach((id) => {
+    ["roundName", "prizeName", "prizeValue", "winnerCount"].forEach((id) => {
       $(id).addEventListener("input", queueAutoSave);
       $(id).addEventListener("change", queueAutoSave);
     });
+    $("fixedWinners").addEventListener("input", queueSanitizeFixedWinners);
+    $("fixedWinners").addEventListener("change", queueSanitizeFixedWinners);
 
     $("saveEventBtn").addEventListener("click", saveEvent);
     $("saveRoundBtn").addEventListener("click", saveRound);
@@ -861,6 +904,5 @@
   </script>
 </body>
 </html>
-
 
 
